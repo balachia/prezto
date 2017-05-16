@@ -63,7 +63,7 @@ function prompt_alt_setup {
   #PROMPT='%F{cyan}%c%f ${git_info:+${(e)git_info[prompt]}}${editor_info[keymap]} '
   PROMPT='%F{cyan}${_prompt_pwd} ${git_info:+${(e)git_info[prompt]}}${editor_info[keymap]} '
   #RPROMPT='${ruby_info[version]}'
-  RPROMPT='%F{magenta}%t %F{blue}%n%f@%B%F{cyan}%m%f'
+  RPROMPT='%F{blue}%n%f@%B%F{cyan}%m%f %F{magenta}%t'
 }
 
 prompt_alt_setup "$@"
