@@ -42,6 +42,27 @@ function prompt_alt_setup {
   # Add hook for calling git-info before each command.
   add-zsh-hook precmd prompt_alt_precmd
 
+  local _zsh_colors
+  typeset -A _zsh_colors
+  if [[ `tput colors` = 256 ]]; then
+    #_zsh_colors[bg]='%K{17}'
+    _zsh_colors[bg]=''
+    _zsh_colors[dir]="%F{39}"
+    _zsh_colors[err]='%F{196}'
+    _zsh_colors[usr]='%F{28}'
+    _zsh_colors[host]='%B%F{49}'
+    _zsh_colors[time]='%F{136}'
+  else
+    _zsh_colors[bg]=''
+    _zsh_colors[dir]='%F{cyan}'
+    _zsh_colors[err]='%F{red}'
+    _zsh_colors[usr]='%F{blue}'
+    _zsh_colors[host]='%B%F{cyan}'
+    _zsh_colors[time]='%F{magenta}'
+  fi
+
+  _BG=$_zsh_colors[bg]
+
   # Set editor-info parameters.
   zstyle ':prezto:module:editor:info:completing' format '%B%F{red}...%f%b'
   zstyle ':prezto:module:editor:info:keymap:primary' format "%B%F{green}❯%f%b"
@@ -61,9 +82,12 @@ function prompt_alt_setup {
 
   # Define prompts.
   #PROMPT='%F{cyan}%c%f ${git_info:+${(e)git_info[prompt]}}${editor_info[keymap]} '
-  PROMPT='%(?..%F{red}[%?] )%F{cyan}${_prompt_pwd} ${git_info:+${(e)git_info[prompt]}}${editor_info[keymap]} '
+  #PROMPT='%(?..%F{red}[%?] )%F{cyan}${_prompt_pwd} ${git_info:+${(e)git_info[prompt]}}${editor_info[keymap]} '
+  #PROMPT='%(?..%F{red}[%?] )${_zsh_colors[dir]}${_prompt_pwd} ${git_info:+${(e)git_info[prompt]}}${editor_info[keymap]} '
+  PROMPT=$_BG'%(?..'$_zsh_colors[err]'[%?] )'$_zsh_colors[dir]'${_prompt_pwd} ${git_info:+${(e)git_info[prompt]}}${editor_info[keymap]}'$_BG' '$_BG
   #RPROMPT='${ruby_info[version]}'
-  RPROMPT='%F{blue}%n%f@%B%F{cyan}%m%f %F{magenta}%t'
+  #RPROMPT='%F{blue}%n%f@%B%F{cyan}%m%f %F{magenta}%t'
+  RPROMPT=$_zsh_colors[usr]'%n%f@'$_zsh_colors[host]'%m%f '$_zsh_colors[time]'%t'
 }
 
 prompt_alt_setup "$@"
