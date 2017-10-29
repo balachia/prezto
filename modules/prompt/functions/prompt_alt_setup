@@ -28,7 +28,7 @@ function prompt_alt_precmd {
     ruby-info
   fi
 
-  _prompt_pwd=$(promptpwd)
+  _prompt_pwd=$(prompt-pwd)
 }
 
 function prompt_alt_setup {
